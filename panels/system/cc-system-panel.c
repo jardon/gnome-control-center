@@ -33,6 +33,7 @@
 #include "remote-desktop/cc-remote-desktop-page.h"
 #include "remote-login/cc-remote-login-page.h"
 #include "users/cc-users-page.h"
+#include "updates/cc-system-updates-page.h"
 
 struct _CcSystemPanel
 {
@@ -45,6 +46,7 @@ struct _CcSystemPanel
   AdwActionRow *region_row;
   AdwActionRow *remote_desktop_row;
   AdwActionRow *users_row;
+  AdwActionRow *system_updates_row;
 
   GtkWidget *remote_login_dialog;
   AdwNavigationPage *software_updates_group;
@@ -91,8 +93,9 @@ gpk_update_viewer_exists (void)
 static gboolean
 show_software_updates_group (CcSystemPanel *self)
 {
-  return (gnome_software_exists () && gnome_software_allows_updates ()) ||
-         gpk_update_viewer_exists ();
+  // return (gnome_software_exists () && gnome_software_allows_updates ()) ||
+  //        gpk_update_viewer_exists ();
+  return true;
 }
 
 static void
@@ -155,6 +158,8 @@ on_subpage_set (CcSystemPanel *self)
     page_type = CC_TYPE_REMOTE_DESKTOP_PAGE;
   else if (g_str_equal (tag, "users"))
     page_type = CC_TYPE_USERS_PAGE;
+  else if (g_str_equal (tag, "system-updates"))
+    page_type = CC_TYPE_SYSTEM_UPDATES_PAGE;
 
   if (page_type == G_TYPE_INVALID)
     return;
@@ -181,6 +186,8 @@ on_page_activated (AdwActionRow *row,
     page_type = CC_TYPE_REMOTE_DESKTOP_PAGE;
   else if (row == self->users_row)
     page_type = CC_TYPE_USERS_PAGE;
+  else if (row == self->system_updates_row)
+    page_type = CC_TYPE_SYSTEM_UPDATES_PAGE;
 
   if (!page_type)
     return;
@@ -201,6 +208,7 @@ cc_system_panel_class_init (CcSystemPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcSystemPanel, remote_desktop_row);
   gtk_widget_class_bind_template_child (widget_class, CcSystemPanel, users_row);
   gtk_widget_class_bind_template_child (widget_class, CcSystemPanel, navigation);
+  gtk_widget_class_bind_template_child (widget_class, CcSystemPanel, system_updates_row);
   gtk_widget_class_bind_template_child (widget_class, CcSystemPanel, software_updates_group);
 
   gtk_widget_class_bind_template_callback (widget_class, cc_system_page_open_software_update);
@@ -213,6 +221,7 @@ cc_system_panel_class_init (CcSystemPanelClass *klass)
   g_type_ensure (CC_TYPE_REMOTE_DESKTOP_PAGE);
   g_type_ensure (CC_TYPE_REMOTE_LOGIN_PAGE);
   g_type_ensure (CC_TYPE_USERS_PAGE);
+  g_type_ensure (CC_TYPE_SYSTEM_UPDATES_PAGE);
 }
 
 static void

@@ -63,6 +63,7 @@ sources = files(
   'users/pw-utils.c',
   'users/run-passwd.c',
   'users/user-utils.c',
+  'updates/cc-system-updates-page.c',
 )
 
 sources += gnome.compile_resources(
@@ -153,6 +154,7 @@ subdir('region')
 subdir('remote-desktop')
 subdir('remote-login')
 subdir('users')
+subdir('updates')
 
 panels_libs += static_library(
   cappletname,

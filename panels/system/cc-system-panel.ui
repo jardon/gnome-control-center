@@ -84,13 +84,13 @@
                     <child>
                       <!-- Software Updates -->
                       <object class="AdwPreferencesGroup" id="software_updates_group">
-                        <property name="visible">False</property>
+                        <!-- <property name="visible">True</property> -->
                         <child>
-                          <object class="AdwActionRow">
-                            <property name="activatable">True</property>
+                          <object class="CcListRow" id="software_update_row">
                             <property name="title" translatable="yes">Software _Updates</property>
+                            <property name="subtitle" translatable="yes">Check for updates to installed software</property>
                             <property name="icon-name">update-symbolic</property>
-                            <property name="use-underline">True</property>
+                            <property name="show-arrow">False</property>
                             <signal name="activated" handler="cc_system_page_open_software_update" swapped="yes"/>
                             <child type="suffix">
                               <object class="GtkImage">
@@ -98,6 +98,15 @@
                                 <property name="icon-name">adw-external-link-symbolic</property>
                               </object>
                             </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="CcListRow" id="system_updates_row">
+                            <property name="title" translatable="yes">System _Updates</property>
+                            <property name="subtitle" translatable="yes">Check for system image updates</property>
+                            <property name="icon-name">update-symbolic</property>
+                            <property name="show-arrow">True</property>
+                            <signal name="activated" handler="on_page_activated"/>
                           </object>
                         </child>
                       </object>
